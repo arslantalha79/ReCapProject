@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.Fluent;
 using Core.Aspects.Autofac.Validation;
@@ -26,6 +27,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -53,6 +55,7 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
+            //Select * from Cars where brandId = 5
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -81,8 +84,6 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        
-
 
     }
 }
