@@ -41,6 +41,11 @@ namespace Business.Concrete
             return _userDal.Get(u => u.Email == email);
         }
 
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
+
         public IDataResult<List<User>> GetUserById(int userId)
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll(u => u.Id == userId));
